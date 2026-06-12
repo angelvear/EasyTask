@@ -1,0 +1,18 @@
+mi-app-tareas/
+├── app/                      # La lógica del backend (Controladores, Modelos)
+│   ├── Http/Controllers/     # Aquí se procesa el Login y tus futuras Familias
+│   └── Models/               # Tus tablas de la BD convertidas en objetos PHP
+├── config/                   # Archivos de configuración general
+├── database/                 # Migraciones (el diseño de tus tablas SQL)
+├── **public/** # Carpeta raíz pública (CSS compilado, imágenes, JS)
+│   └── build/                # Aquí Tailwind guarda el diseño final listo para la web
+├── **resources/** # ¡AQUÍ ESTÁ TU FRONTEND!
+│   ├── **css/** # Estilos fuente (app.css)
+│   ├── js/                   # Scripts fuente
+│   └── **views/** # Tus archivos HTML/Blade
+│       ├── **auth/** # Vistas de autenticación (Login, Registro...)
+│       ├── **layouts/** # Plantillas base (el esqueleto de tu web)
+│       └── components/       # Componentes reutilizables (botones, inputs)
+├── routes/                   # Las URLs de tu web (web.php)
+├── .env                      # Tu configuración secreta (Base de datos Docker)
+└── package.json              # Configuración de NodeJS y Tailwind
