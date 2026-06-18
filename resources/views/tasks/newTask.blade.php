@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <a href="{{ url()->previous() }}" class="uppercase text-md px-4 py-2 text-white border border-blue-700 hover:border-blue-500 rounded bg-blue-700 hover:bg-blue-500">
+            Atrás
+        </a>
     </x-slot>
 
     <div class="py-12">

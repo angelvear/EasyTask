@@ -3,15 +3,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Shared extends Model
 {
     protected $fillable = [
-        'titulo',
-        'user_id',
-        'share',
+        'id',
+        'id_user',
+        'id_grupo',
     ];
 
-    protected $table = 'grupos';
+    protected $table = 'shared_groups';
 
     public $_timestamps = true;
 }

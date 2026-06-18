@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,30 +26,41 @@ Route::put('/users/{id}', [UserController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('users.update');
 
-    Route::get('/groups/form', [UserController::class, 'groupForm'])
+    Route::get('/groups/form', [GroupController::class, 'groupForm'])
     ->middleware(['auth', 'verified'])
     ->name('groups.form');
 
-    Route::post('/groups/create', [UserController::class, 'newGroup'])
+    Route::post('/groups/create', [GroupController::class, 'newGroup'])
     ->middleware(['auth', 'verified'])
     ->name('groups.save');
 
-    Route::get('/tasks/view/{groupId}', [UserController::class, 'taskView'])
+    Route::get('/tasks/view/{groupId}', [TaskController::class, 'taskView'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.view');
 
-    Route::get('/tasks/form/{groupId}', [UserController::class, 'taskForm'])
+    Route::get('/tasks/form/{groupId}', [GroupController::class, 'taskForm'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.create');
 
-    Route::post('/tasks/{groupId}/create', [UserController::class, 'newTask'])
+    Route::post('/tasks/{groupId}/create', [TaskController::class, 'newTask'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.save');
 
-    Route::get('/groups/delete/{id}', [UserController::class, 'deleteGroup'])
+    Route::get('/groups/delete/{id}', [GroupController::class, 'deleteGroup'])
     ->middleware(['auth', 'verified'])
     ->name('groups.delete');
+
+    Route::get('/tasks/delete/{tarea_id}', [TaskController::class, 'deleteTask'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.delete');
     
+    Route::get('/groups/join', [GroupController::class, 'sharedForm'])
+    ->middleware(['auth', 'verified'])
+    ->name('groups.sharedform');
+
+    Route::post('/groups/join', [GroupController::class, 'joinGroup'])
+    ->middleware(['auth', 'verified'])
+    ->name('groups.join');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

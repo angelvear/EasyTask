@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Task;
+use App\Models\Shared;
 
 class UserController extends Controller
 {
@@ -41,69 +42,20 @@ class UserController extends Controller
         return redirect()->route('configuration');
     }
 
-
-    // Métodos para crear los grupos nuevos
-    public function groupForm()
-    {
-        return view('groups.newGroup');
-    }
-
-    public function newGroup(Request $request)
-    {
-        $group = Group::create([
-            'titulo' => $request->input('title'),
-            'user_id' => auth()->id(),
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Grupo creado exitosamente');
-        
-    }
-
-    //metodo para ver los grupos creados por el usuario
     public function viewGroups()
     {
         $groups = Group::select('id', 'titulo')
             ->where('user_id', auth()->id())
             ->get();
-        return view('dashboard', ['groups' => $groups]);
-    }
+        
 
-    public function taskView($groupId)
-    {
-        $tasks = Task::select('tarea_id', 'titulo', 'estatus', 'fecha_limite')
-            ->where('grupo_id', $groupId)
+        $sharedGroups = Shared::where('id_user', auth()->id())
+            ->pluck('id_grupo');
+
+        $groupsJoin = Group::select('id', 'titulo')
+            ->whereIn('id', $sharedGroups)
             ->get();
-        return view('tasks.taskView', ['tasks' => $tasks]);
-    }
 
-    
-    public function taskForm($groupId)
-    {
-        $group = Group::findOrFail($groupId);
-        return view('tasks.newTask', ['group' => $group]);
-    }
-
-    public function newTask(Request $request, $groupId)
-    {
-
-        $task = Task::create([
-            'titulo' => $request->input('titulo'),
-            'estatus' => $request->input('estado'),
-            'fecha_limite' => $request->input('deadline'),
-            'usuario_id' => auth()->id(),
-            'grupo_id' => $groupId,
-        ]);
-        return redirect()->route('dashboard')->with('success', 'Tarea creada exitosamente');
-    }
-    public function deleteGroup($id)
-    {
-        $group = Group::findOrFail($id);
-
-        if ($group->user_id === auth()->id()) {
-
-           Group::destroy($id);
-    }
-
-        return redirect()->route('dashboard')->with('success', 'Grupo eliminado exitosamente');
+        return view('dashboard', ['groups' => $groups, 'groupsJoin' => $groupsJoin]);
     }
 }
