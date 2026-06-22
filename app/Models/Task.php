@@ -13,6 +13,7 @@ class Task extends Model
         'estatus',
         'grupo_id',
     ];
+    
 
     protected $table = 'tareas';
     
