@@ -14,7 +14,7 @@ class Task extends Model
         'grupo_id',
     ];
     
-
+    //añadimos el nombre de la tabla para que busque la tabla correcta
     protected $table = 'tareas';
     
     public $_timestamps = true;
