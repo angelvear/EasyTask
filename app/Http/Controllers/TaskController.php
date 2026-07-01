@@ -11,10 +11,9 @@ class TaskController extends Controller
 {
 public function taskView($groupId)
     {
-        $tasks = Task::select('tarea_id', 'titulo', 'estatus', 'fecha_limite')
+        $tasks = Task::select('tarea_id', 'titulo', 'estatus', 'usuario_id', DB::raw("DATE_FORMAT(fecha_limite, '%d-%m-%Y') as fecha_formato"))
             ->where('grupo_id', $groupId)
             ->get();
-        
 
         $groups = Group::select('share')
             ->where('id', $groupId)
@@ -48,6 +47,17 @@ public function taskView($groupId)
         }
 
         return redirect()->route('dashboard')->with('success', 'Tarea eliminada exitosamente');
+    }
+
+    public function completeTask($tarea_id)
+    {
+     $task = Task::findOrFail($tarea_id);
+     
+
+            $task->estatus = 'completada';
+            $task->save();
+        
+        return redirect() -> route('dashboard');
     }
 
     

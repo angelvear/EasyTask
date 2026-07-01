@@ -53,6 +53,11 @@ Route::put('/users/{id}', [UserController::class, 'update'])
     Route::get('/tasks/delete/{tarea_id}', [TaskController::class, 'deleteTask'])
     ->middleware(['auth', 'verified'])
     ->name('tasks.delete');
+
+    Route::get('/tasks/complete/{tarea_id}', [TaskController::class, 'completeTask'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.complete');
+    
     
     Route::get('/groups/join', [GroupController::class, 'sharedForm'])
     ->middleware(['auth', 'verified'])
